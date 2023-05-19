@@ -50,4 +50,11 @@ class Mahasiswa extends Model
         $data = DB::table('mahasiswa')->where('id', $id)->first();
         return $data;
     }
+    public static function viewmahasiswaabsensi($id){
+        $data = DB::table('mahasiswa as m')
+            ->join('kelas as k', 'k.id_kelas', '=', 'm.id_kelas')
+            ->where('m.id_kelas', $id)
+            ->get();
+        return $data;
+    }
 }

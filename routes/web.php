@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\CnPController;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\EditAdminController;
 use App\Http\Controllers\EditController;
 use App\Http\Controllers\HapusAdminController;
@@ -43,10 +44,10 @@ Route::get('/log_admin', function () {
 Route::controller(LoginController::class)->group(function (){
     // Backend
     Route::post('/postlogin', 'postlogin')->name('postlogin');
-    Route::post('/logout', 'logout')->name('logout');
+    Route::get('/logout', 'logout')->name('logout');
     // Frontend
     Route::post('/postlogin2', 'postlogin2')->name('postlogin2');
-    Route::post('/logout2', 'logout2')->name('logout2');
+    Route::get('/logout2', 'logout2')->name('logout2');
 });
 Route::group(['middleware' => ['auth:user']], function(){
     Route::get('/home_admin', [HomeController::class, 'home_admin']);
@@ -131,6 +132,8 @@ Route::group(['middleware' => ['auth:user']], function(){
     Route::get('/data/{id?}', [AjaxController::class, 'DataKelas'])->name('data');
     Route::post('/absensi/tambah', [TambahAdminController::class, 'TambahAbsensi']);
     Route::post('/absensi/edit', [TambahAdminController::class, 'EditAbsensi']);
+    Route::get('/absensi/view/{id}', [PageAdminController::class, 'viewabsensi']);
+    Route::get('/absensi/mahasiswa/{id}', [PageAdminController::class, 'viewabsensimahasiswa']);
     // Pengumuman
     Route::get('/pengumuman', [PageAdminController::class, 'Pengumuman']);
     Route::get('/pengumuman/formtambah', [PageAdminController::class, 'FormPengumuman']);
@@ -142,6 +145,9 @@ Route::group(['middleware' => ['auth:user']], function(){
     Route::get('/tugas_akhir/pengajuan_proposal', [PageAdminController::class, 'PengajuanProposal']);
     Route::post('/tugas_akhir/acc', [TambahAdminController::class, 'TugasAkhirAcc']);
     Route::get('/tugas_akhir/tolak/{id}', [TambahAdminController::class, 'TugasAkhirTolak']);
+    // Tugas
+    Route::get('/admin/tugas', [PageAdminController::class, 'tugas'])->name('admtugas');
+    Route::get('/admtugas/hapus/{id}', [HapusAdminController::class, 'tugas']);
     // ===========================================================================================//
     // ===========================================================================================//
     // Keuangan
@@ -239,6 +245,7 @@ Route::group(['middleware' => ['auth:dosen']], function(){
         Route::get('/nilai_kelas', 'NilaiKelas');
         Route::get('/absensi/kelas/{id}', 'DetailAbsensiKelas');
         Route::get('/nilai/kelas/{id}', 'DetailNilaiKelas');
+        Route::get('/tugas/kelas/{id}', 'detailtugas');
     });
     Route::controller(TambahController::class)->group(function () {
         Route::post('/absensi/input', 'InputAbsensi');
@@ -254,10 +261,17 @@ Route::group(['middleware' => ['auth:dosen']], function(){
         Route::post('/bimbingan/verifikasi', 'VerifikasiBimbinganTa');
         Route::get('/verifikasi/sidang/{id}', 'VerifikasiSidang');
     });
+    Route::controller(DownloadController::class)->group(function(){
+        Route::get('/tugas/download/{file}', 'downloadhasiltugas');
+    });
 });
 Route::group(['middleware' => ['auth:mahasiswa']], function(){
 
     Route::get('home_mahasiswa', [HomeController::class, 'HomeMahasiswa']);
+
+    Route::controller(DownloadController::class)->group(function(){
+        Route::get('/download/tugas/{file}', 'download');
+    });
 
     Route::controller(MahasiswaController::class)->group(function () {
 
@@ -303,6 +317,7 @@ Route::group(['middleware' => ['auth:mahasiswa']], function(){
         Route::post('/ta/entribimbingan/input', 'InputBimbinganTa');
         Route::post('/ta/daftarsidang/daftar', 'InputDaftarSidang');
         Route::post('/ta/verifikasi_sidang/ajukan', 'AjukanVerifikasiSidang');
+        Route::post('/tugas/upload', 'uploadtugas');
         // ===============================================================================//
         // Update
         Route::post('/biodata/edit/password', 'EditPassword');
@@ -313,6 +328,7 @@ Route::group(['middleware' => ['auth:mahasiswa']], function(){
         // ===============================================================================//
         // Delete
         Route::get('/bimbingan/kki/hapus/{id}', 'HapusBimbinganKki');
+        // ===============================================================================//
     });
     Route::get('/kehadiran/ajax/{id?}', [AjaxController::class, 'Kehadiran'])->name('kehadiran');
 });

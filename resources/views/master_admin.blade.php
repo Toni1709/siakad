@@ -107,7 +107,7 @@
                                 </li>
                                 <li> <a href="/jadwal_dosen"><i class="bx bx-right-arrow-alt"></i>Jadwal Dosen</a>
                                 </li>
-                                <li> <a href="/bahan_tugas"><i class="bx bx-right-arrow-alt"></i>Bahan & Tugas</a>
+                                <li> <a href="{{ route('admtugas') }}"><i class="bx bx-right-arrow-alt"></i>Tugas</a>
                                 </li>
                                 <li> <a href="content-typography.html"><i class="bx bx-right-arrow-alt"></i>Rekap Absensi Mahasiswa</a>
                                 </li>

@@ -367,6 +367,24 @@ class MahasiswaController extends Controller
         ]);
         return redirect('/ta/verifikasi_sidang');
     }
+    public function uploadtugas(Request $request){
+
+        $file = $request->file('file');
+
+        if($file){
+            $filename = uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move('berkas/tugas/mahasiswa', $filename);
+            DB::table('upload_tugas')->insert([
+                'id_mahasiswa' => $request->id_mahasiswa,
+                'id_tugas' => $request->id_tugas,
+                'file_tugas' => $filename,
+                'date' => date('Y-m-d H:i:s')
+            ]);
+            return redirect('/mahasiswa/tugas');
+        }else{
+            return redirect()->back();
+        }
+    }
      // ==========================================================================================//
     // Proses Edit
     public function EditPassword(Request $r){
@@ -461,4 +479,6 @@ class MahasiswaController extends Controller
         DB::table('bimbingan_kki')->where('id_bimbingankki', $id)->delete();
         return redirect('/bimbingan/kki');
     }
+    // ==========================================================================================//
+
 }

@@ -19,7 +19,8 @@
                     <td>{{ $k->sks }}</td>
                     <td>{{ $k->nama_dosen }}</td>
                     <td>
-                        <a href="/absensi/{{ $k->id_kelas }}" class="btn btn-sm btn-danger">Lihat Absensi</a>
+                        <a href="/absensi/{{ $k->id_kelas }}" class="btn mb-1 btn-sm btn-danger">Input Absensi</a>
+                        <a href="/absensi/view/{{ $k->id_kelas }}" class="btn mb-1 btn-sm btn-danger">Lihat Absensi</a>
                     </td>
                 </tr>
             @endforeach

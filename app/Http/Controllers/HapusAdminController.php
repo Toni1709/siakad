@@ -65,4 +65,8 @@ class HapusAdminController extends Controller
         DB::table('pengumuman')->where('id_pengumuman', $id)->delete();
         return redirect('/pengumuman');
     }
+    public function tugas($id){
+        DB::table('tugas')->where('id_tugas', $id)->delete();
+        return redirect()->back();
+    }
 }

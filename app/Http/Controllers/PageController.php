@@ -63,4 +63,8 @@ class PageController extends Controller
         $data['tugas'] = Tugas::datatugas();
         return view('front.dosen.tugas', $data);
     }
+    public function detailtugas($id){
+        $data['mahasiswa'] = Tugas::pengumpulantugas($id);
+        return view('front.dosen.detail_tugas', $data);
+    }
 }

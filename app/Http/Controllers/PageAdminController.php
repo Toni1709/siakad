@@ -18,6 +18,7 @@ use App\Models\Prodi;
 use App\Models\Ruangan;
 use App\Models\Semester;
 use App\Models\TahunAkademik;
+use App\Models\Tugas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -197,5 +198,18 @@ class PageAdminController extends Controller
         $data['dosen'] = Dosen::Dosen();
         // dd($data['dosen']);
         return view('admin.ta.pengajuan_proposal', $data);
+    }
+    public function tugas(){
+        $data['tugas'] = Tugas::Admintugas();
+        return view('admin.akademik.tugas', $data);
+    }
+    public function viewabsensi($id){
+        $data['mahasiswa'] = Mahasiswa::viewmahasiswaabsensi($id);
+        return view('admin.absensi.view_absensi_mahasiswa', $data);
+    }
+    public function viewabsensimahasiswa($id){
+        $data['jadwal'] = JadwalPelajaran::JadwalPelajaranMahasiswa($id);
+        // dd($data['jadwal']);
+        return view('admin.absensi.view_absensi', $data);
     }
 }

@@ -51,7 +51,7 @@
                                     <td>{{ $t->mulai }}</td>
                                     <td>{{ $t->selesai }}</td>
                                     <td>
-
+                                        <a href="/tugas/kelas/{{ $t->id_tugas }}" class="btn btn-sm btn-light">View</a>
                                     </td>
                                 </tr>
                             @endforeach
